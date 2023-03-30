@@ -1,0 +1,10 @@
+/* ====== HOME PAGE ===== */
+.main{
+    padding: 40px;
+}
+.h1-list{
+    font-size: 25px;
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+}
