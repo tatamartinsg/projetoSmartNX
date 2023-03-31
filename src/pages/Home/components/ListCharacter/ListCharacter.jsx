@@ -1,10 +1,14 @@
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './listCharacter.css'
-  
+import SearchIcon from '@mui/icons-material/Search';
+
 function ListCharacter(props) {
-    let i = 0
+    let i = 0 //é o valor do id dos personagens e será incrimentado a cada personagem
+    //precisa do valor do id, pois o dataGrid exige um valor de id
+    const [input, setInput] = useState("")
+    
     const columns = [
         {
           field: 'nameCharacter',
@@ -15,88 +19,99 @@ function ListCharacter(props) {
           field: 'birthYear',
           headerName: 'Ano de Nascimento',
           width: 200,
-          editable: true,
         },
         {
             field: 'gender',
             headerName: 'Gênero',
             width: 200,
-            editable: true,
+
         },
         {
             field: 'height',
             headerName: 'Altura',
             width: 150,
-            editable: true,
+
         },
         {
             field: 'hairColor',
             headerName: 'Cor do Cabelo',
             width: 200,
-            editable: true,
+
         },
         {
             field: 'eyeColor',
             headerName: 'Cor dos Olhos',
-            width: 200,
-            editable: true,
+            width: 150,
+
         },
         {
             field: 'skinColor',
             headerName: 'Cor da Pele',
-            width: 200,
-            editable: true,
+            width: 150,
+
         }
       ];
-      
 
-     const rows = props.somProp.map((row) => (
-        {
-            id: i+=1,
-            nameCharacter: row.name,
-            birthYear: row.birth_year,
-            gender: row.gender,
-            height: row.height,
-            hairColor: row.hair_color,
-            eyeColor:row.eye_color,
-            skinColor: row.skin_color
-        }
-     ))
-
-
+     const row = props.charactersProp.map((row) => (
+         {
+             id: i+=1,
+             nameCharacter: row.name,
+             birthYear: row.birth_year,
+             gender: row.gender,
+             height: row.height,
+             hairColor: row.hair_color,
+             eyeColor:row.eye_color,
+             skinColor: row.skin_color
+         }
+      ))
+    
+     //ao filtrar, primeiro, passa todos os caracteres para letra minúscula
+     //desse modo, consegue filtrar todos os personagens
+     const inputLowerCase = input.toLowerCase()
+     const filterCharacters = row.filter( (team) => 
+         team.nameCharacter.toLowerCase().includes(inputLowerCase)
+     )
+ 
     return(
-
-        <div className="div-listCharacter">
-            {console.log(props.somProp)}
-
-            <Box sx={{ 
-                height: 400, width: '100%', background: '#1D1D1D' ,
-            }}>
-                <DataGrid
-                    sx={{
-                        border: 2,
-                        '& .MuiDataGrid-cell:hover': {
-                          color: 'primary.main',
-                        },
-                    }}
-                    className="dataGrid-listCharacter"
-                    rows={rows}
-                    columns={columns}
-                    initialState={{
-                        pagination: {
-                            paginationModel: {
-                                pageSize: 10,
-                            },
-                        },
-                    }}
-                                         
+        <section>
+            <div className="div-search">
+                <input className="input-search" type="text" 
+                    name="nameCharacter"
+                    placeholder="Busque pelo nome"
+                    value={input}
+                    onChange={(e) => {setInput(e.target.value)}} 
                 />
-            </Box>
-            {/* <ul>
-                {props.somProp.map(item => console.log(item))}
-            </ul> */}
+                <SearchIcon className="icon-search" />  
+            </div>
+            <div className="div-listCharacter">
 
-        </div>
+                <Box 
+                    sx={{ 
+                        height: 400, width: '100%'  
+                    }}
+                >
+                    <DataGrid
+                        sx={{
+                            border: 2,
+                            '& .MuiDataGrid-cell:hover': {
+                            color:'primary.light' ,
+                            },
+                            color:'white'                      
+                        }}
+                        className="dataGrid-listCharacter"
+                        rows={filterCharacters}
+                        columns={columns}
+                        initialState={{
+                            pagination: {
+                                paginationModel: {
+                                    pageSize: 10,
+                                },
+                            },
+                        }}                               
+                    />
+                </Box>
+            </div>
+        </section>
     )
 }
 

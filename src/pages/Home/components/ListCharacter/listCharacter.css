@@ -1,3 +1,33 @@
+/*========== DATAGRID LIST =============== */
 .dataGrid-listCharacter{
-    background-color: #272d2b;
+    background-color: #3b3b3b
+}
+
+/* ========== SEARCH CHARACTER =========== */
+
+.div-search{
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.input-search{
+    height: 30px;
+    background-color: #daec51;
+    color: black;
+    border-radius: 10px 10px 10px;
+    border: 0px;
+    outline: 0;
+    padding:5px;
+    text-align: center;
+}
+.input-search:hover{
+    background-color: #d4e259;
+    box-shadow: 1px 1px 10px rgb(224, 222, 92);
+}
+.icon-search{
+    color: white;
+    cursor: pointer;
 }
